@@ -1,10 +1,9 @@
-version: '3.8'
+version: '3.9'
 
-services: # services are just containers in production
-  
+services:
   database:
-    container_name: database #actual name of the container when it runs
-    image: mysql:8.0.29 # mysql version to use
+    container_name: database
+    image: mysql:8.0.29
     command: --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_PASSWORD: secret
@@ -38,7 +37,7 @@ services: # services are just containers in production
     ports:
       - '80:80'
     volumes:
-      - ./app:/var/www/symfony 
+      - ./app:/var/www/symfony:ro
     depends_on:
       - php
       - database
@@ -47,8 +46,22 @@ services: # services are just containers in production
     networks:
       - symfony
 
+  cache:
+    container_name: redis
+    image: redis:7.0-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes: 
+      - cache:/data
+    networks:
+      - symfony
+
 volumes:
   app_db:
+  cache:
+    driver: local
 
 networks:
   symfony:

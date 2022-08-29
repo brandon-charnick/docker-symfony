@@ -4,7 +4,8 @@ up:
 build:
 	docker compose build database \
 	&& docker compose build php \
-	&& docker compose build nginx
+	&& docker compose build nginx \
+	&& docker compose build cache
 
 php:
 	docker compose exec php /bin/bash

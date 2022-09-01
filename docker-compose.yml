@@ -24,7 +24,7 @@ services:
     ports:
       - '9000:9000'
     volumes:
-      - ./app:/var/www/symfony # where to place project files
+      - ./:/var/www/symfony # where to place project files
     depends_on:
       - database
     networks:
@@ -37,11 +37,22 @@ services:
     ports:
       - '80:80'
     volumes:
-      - ./app:/var/www/symfony:ro
+      - ./:/var/www/symfony:ro
     depends_on:
       - php
       - database
     links:
+      - php
+    networks:
+      - symfony
+
+  node:
+    image: node:latest
+    container_name: node
+    working_dir: /var/www/symfony/
+    volumes:
+      - ./:/var/www/symfony/
+    depends_on:
       - php
     networks:
       - symfony

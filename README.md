@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a `Symfony 6` application built with `Docker` and `Docker Compose V2` for running the environment for local development.
+This is a `Symfony 6` application built with `Docker` and `Docker Compose V2` for for a local development environment.
 
 It is composed of the following containers:
 
@@ -12,14 +12,33 @@ It is composed of the following containers:
 | nginx | `nginx:stable-alpine` |
 | mysql | `mysql:8.0.29` |
 | node | `node:18-alpine` |
+| redis | `redis:7.0-alpine` |
 
 ## Usage
 
-To start the containers, use the `make build` command if installed. Otherwise, run `docker compose build`.
+### Running the docker containers
 
-Utilizing `make` allows adding additional build parameters if needed.
+To build the containers, run:
+
+```bash
+docker compose build
+```
+
+If needed to fine tune the build process, the `make build` command found in the `Makefile` can be edited for your build processes.
+
+To start your containers, run:
+
+```bash
+docker compose up
+```
+
+## Container Notes
+
+The Symfony application is enabled with Encore and the `/assets` will be auto-built on changes.
 
 ## Available `make` commands
+
+If available, the below `make` commands are available to streamline Docker commands and interactions with containers.
 
 `make build`: builds the container in explicit steps
 

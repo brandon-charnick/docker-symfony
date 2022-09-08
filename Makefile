@@ -1,3 +1,6 @@
+include .env.dist
+export
+
 up:
 	docker compose up -d
 
@@ -9,10 +12,17 @@ build:
 	&& docker compose build node 
 
 php:
-	docker compose exec php /bin/bash
+	docker exec -it php /bin/bash
 
-db:
-	docker compose exec database /bin/bash
+restart:
+	docker ps -aq | xargs docker stop | xargs docker rm \
+	&& docker compose down \
+	&& yes|docker builder prune \
+	&& make build \
+	&& docker compose up
 
-node:
-	docker compose run --rm node npm ci
+reset-docker:
+	docker ps -aq | xargs docker stop | xargs docker rm \
+	&& yes|docker system prune -a \
+	&& make build \
+	&& docker compose up

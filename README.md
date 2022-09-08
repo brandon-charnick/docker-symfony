@@ -34,7 +34,7 @@ docker compose up
 
 ## Container Notes
 
-The Symfony application is enabled with Encore and the `/assets` will be auto-built on changes.
+The Symfony application is enabled with [symfony/webpack-encore](https://github.com/symfony/webpack-encore) and the `/assets` will be auto-built on changes.
 
 ## Available `make` commands
 
